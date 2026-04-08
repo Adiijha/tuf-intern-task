@@ -17,7 +17,8 @@ import {
   getRangeKey,
   getIndianHolidayMap,
   nightsBetween,
-  startOfMonth
+  startOfMonth,
+  toIsoDate
 } from "../lib/utils";
 
 export function WallCalendar() {
@@ -30,11 +31,16 @@ export function WallCalendar() {
   const [dayNotes, setDayNotes] = useState<Record<string, string>>({});
   const [noteEditorDate, setNoteEditorDate] = useState<string | null>(null);
   const [loadedMonthKey, setLoadedMonthKey] = useState<string | null>(null);
+  const [todayIso, setTodayIso] = useState<string | null>(null);
   const monthKey = `${monthDate.getFullYear()}-${monthDate.getMonth() + 1}`;
 
   const days = useMemo(() => getDaysMatrix(monthDate), [monthDate]);
   const holidayMap = useMemo(() => getIndianHolidayMap(monthDate.getFullYear()), [monthDate]);
   const monthTheme = useMemo(() => getMonthTheme(monthDate.getMonth()), [monthDate]);
+
+  useEffect(() => {
+    setTodayIso(toIsoDate(new Date()));
+  }, []);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(`calendar-month-${monthKey}`);
@@ -205,20 +211,20 @@ export function WallCalendar() {
 
   return (
     <main className="grid min-h-screen place-items-center px-1.5 py-4 sm:px-3.5 sm:py-8">
-      <section className="relative w-full max-w-[760px] pt-10">
-        <div className="absolute left-1/2 top-0 h-14 w-[116px] -translate-x-1/2" aria-hidden="true">
-          <span className="absolute left-0 top-6 w-[42px] border-t-2 border-[rgba(69,62,52,0.7)]" />
-          <span className="absolute right-0 top-6 w-[42px] border-t-2 border-[rgba(69,62,52,0.7)]" />
+      <section className="relative w-full max-w-190 pt-10">
+        <div className="absolute left-1/2 top-0 h-14 w-29 -translate-x-1/2" aria-hidden="true">
+          <span className="absolute left-0 top-6 w-10.5 border-t-2 border-[rgba(69,62,52,0.7)]" />
+          <span className="absolute right-0 top-6 w-10.5 border-t-2 border-[rgba(69,62,52,0.7)]" />
           <span className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 rounded-full bg-[#b8b1a5] shadow-[0_2px_8px_rgba(0,0,0,0.12)]" />
-          <span className="absolute left-1/2 top-3 h-10 w-10 -translate-x-1/2 rotate-45 rounded-tl-[4px] border-l-2 border-t-2 border-[rgba(69,62,52,0.7)]" />
+          <span className="absolute left-1/2 top-3 h-10 w-10 -translate-x-1/2 rotate-45 rounded-tl-sm border-l-2 border-t-2 border-[rgba(69,62,52,0.7)]" />
         </div>
 
-        <article className="overflow-hidden rounded-[6px] bg-[linear-gradient(180deg,#fcfaf5_0%,#f8f4ec_100%)] shadow-[0_26px_58px_rgba(48,39,26,0.16),0_6px_18px_rgba(31,22,15,0.08)] sm:rounded-[8px]">
+        <article className="overflow-hidden rounded-md bg-[linear-gradient(180deg,#fcfaf5_0%,#f8f4ec_100%)] shadow-[0_26px_58px_rgba(48,39,26,0.16),0_6px_18px_rgba(31,22,15,0.08)] sm:rounded-lg">
           <div className="flex justify-center gap-1.5 px-2.5 pt-3 pb-1.5 sm:gap-2.5 sm:px-5 sm:pt-3.5 sm:pb-2" aria-hidden="true">
             {Array.from({ length: 26 }, (_, index) => (
               <span
                 key={index}
-                className="h-[14px] w-[7px] rounded-full border-2 border-b-0 border-[#3b3d42] opacity-90 sm:h-[18px] sm:w-[9px]"
+                className="h-3.5 w-1.75 rounded-full border-2 border-b-0 border-[#3b3d42] opacity-90 sm:h-4.5 sm:w-2.25"
               />
             ))}
           </div>
@@ -234,7 +240,7 @@ export function WallCalendar() {
               headlineBottom={monthTheme.headlineBottom}
             />
 
-            <section className="grid gap-4 px-3 py-4 sm:gap-[18px] sm:px-4 sm:py-5 md:grid-cols-[minmax(180px,0.34fr)_minmax(0,0.66fr)] md:gap-[22px] md:px-6 md:pb-6">
+            <section className="grid gap-4 px-3 py-4 sm:gap-4.5 sm:px-4 sm:py-5 md:grid-cols-[minmax(180px,0.34fr)_minmax(0,0.66fr)] md:gap-5.5 md:px-6 md:pb-6">
               <NotesSidebar
                 monthNotes={monthNotes}
                 rangeNotes={rangeNotes}
@@ -316,6 +322,7 @@ export function WallCalendar() {
                   rangeNotesByKey={rangeNotesByKey}
                   startDate={startDate}
                   endDate={endDate}
+                  todayIso={todayIso}
                   accentColor={monthTheme.accentColor}
                   accentSoftColor={monthTheme.accentSoftColor}
                   onDayClick={handleDayClick}

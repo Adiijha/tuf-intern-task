@@ -9,6 +9,7 @@ type CalendarGridProps = {
   rangeNotesByKey: Record<string, string>;
   startDate: string | null;
   endDate: string | null;
+  todayIso: string | null;
   accentColor: string;
   accentSoftColor: string;
   onDayClick: (iso: string) => void;
@@ -22,6 +23,7 @@ export function CalendarGrid({
   rangeNotesByKey,
   startDate,
   endDate,
+  todayIso,
   accentColor,
   accentSoftColor,
   onDayClick,
@@ -60,6 +62,7 @@ export function CalendarGrid({
         const between = isBetween(day.iso);
         const edge = isEdge(day.iso);
         const inRange = between || edge;
+        const isToday = day.iso === todayIso;
         const isSingle = startDate === endDate && day.iso === startDate;
         const hasPinnedNote = Boolean(dayNotes[day.iso]?.trim());
         const hasRangeNote = Object.entries(rangeNotesByKey).some(([rangeKey, note]) => {
@@ -92,27 +95,37 @@ export function CalendarGrid({
               month: "long",
               day: "numeric",
               year: "numeric"
-            })}${holiday ? `, ${holiday.name}` : ""}${hasPinnedNote ? ", has pinned note" : ""}${hasRangeNote ? ", has range note" : ""}`}
-            title={[shortDateLabel(day.iso), holiday?.name, hasPinnedNote ? "Pinned note" : null, hasRangeNote ? "Range note" : null]
+            })}${isToday ? ", today" : ""}${holiday ? `, ${holiday.name}` : ""}${hasPinnedNote ? ", has pinned note" : ""}${hasRangeNote ? ", has range note" : ""}`}
+            title={[shortDateLabel(day.iso), isToday ? "Today" : null, holiday?.name, hasPinnedNote ? "Pinned note" : null, hasRangeNote ? "Range note" : null]
               .filter(Boolean)
               .join(" - ")}
             className={joinClasses(
-              "relative min-h-[36px] cursor-pointer rounded-[8px] border border-transparent bg-white/60 transition hover:-translate-y-px sm:min-h-[48px] sm:rounded-xl",
+              "relative min-h-9 cursor-pointer rounded-lg border border-transparent bg-white/60 transition hover:-translate-y-px sm:min-h-12 sm:rounded-xl",
               inRange ? "text-white" : day.inMonth ? weekendTextClass : outMonthWeekendTextClass,
               !day.inMonth && "bg-white/32",
               isSingle && "rounded-[10px] sm:rounded-xl"
             )}
             style={{
-              borderColor: edge ? `${accentColor}55` : between ? `${accentColor}45` : undefined,
+              borderColor: edge
+                ? `${accentColor}55`
+                : between
+                  ? `${accentColor}45`
+                  : isToday
+                    ? `${accentColor}6b`
+                    : undefined,
               backgroundColor: edge
                 ? accentColor
                 : between
                   ? accentColor
+                  : isToday
+                    ? `${accentSoftColor}cc`
                   : undefined,
               boxShadow: edge
                 ? `0 10px 18px ${accentColor}30`
                 : between
                   ? "inset 0 1px 0 rgba(255,255,255,0.16)"
+                  : isToday
+                    ? `inset 0 0 0 1px ${accentColor}20`
                   : undefined,
               color:
                 !inRange && day.inMonth && weekdayIndex === 5

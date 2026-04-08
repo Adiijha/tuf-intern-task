@@ -22,7 +22,7 @@ This project explores a calendar-note experience than a standard date picker. It
 
 ## Demo
 
-[View project demo on Google Drive](https://drive.google.com/file/d/1J5peC7tubXmVZ2biIONN59q_m8RxvYzv/view?usp=sharing)
+[Google Drive link](https://drive.google.com/file/d/1J5peC7tubXmVZ2biIONN59q_m8RxvYzv/view?usp=sharing)
 
 ## Project Structure
 

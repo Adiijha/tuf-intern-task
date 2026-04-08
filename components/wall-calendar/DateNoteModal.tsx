@@ -53,7 +53,7 @@ export function DateNoteModal({
           placeholder="Write a note for this date..."
           value={activeDayNote}
           onChange={(event) => onChange(event.target.value)}
-          className="mt-4 min-h-[168px] w-full resize-y border-none bg-[linear-gradient(transparent_23px,rgba(19,37,58,0.12)_24px)] bg-[length:100%_24px] px-0 py-1 leading-6 text-[#13253a] outline-none focus:shadow-[inset_0_-2px_0_rgba(32,162,235,0.22)]"
+          className="mt-4 min-h-42 w-full resize-y border-none bg-[linear-gradient(transparent_23px,rgba(19,37,58,0.12)_24px)] bg-size-[100%_24px] px-0 py-1 leading-6 text-[#13253a] outline-none focus:shadow-[inset_0_-2px_0_rgba(32,162,235,0.22)]"
           autoFocus
         />
 
