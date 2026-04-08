@@ -1,6 +1,7 @@
 # Wall Calendar - TUF SUMMER INTERN TASK
 
-A wall-calendar made for TUF Summer intern task, designed and developed by Aditya Kumar Jha.
+A wall calendar made for TUF Summer intern task, designed and developed by Aditya Kumar Jha.
+It was built from a customer’s perspective, with careful attention to the smallest details and features.
 
 ## Overview
 
