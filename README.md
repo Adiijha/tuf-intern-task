@@ -4,13 +4,25 @@ A wall-calendar made for TUF Summer intern task, designed and developed by Adity
 
 ## Overview
 
-This project explores a more tactile calendar experience than a standard date picker. It combines:
+This project explores a calendar-note experience than a standard date picker. It combines:
 
 - range selection with clear in-between highlighting
 - month-specific hero visuals and muted seasonal color themes
 - holiday markers
 - monthly notes, saved range notes, and single-date notes
 - responsive behavior across desktop and mobile
+
+## Calendar Legend
+
+- Diamond marker: a saved range note exists for that date
+- Black dot: a date-specific note is attached to that day
+- Red dot: gazetted holiday
+- Yellow dot: restricted holiday
+- Purple dot: tentative holiday
+
+## Demo
+
+[View project demo on Google Drive](https://drive.google.com/file/d/1J5peC7tubXmVZ2biIONN59q_m8RxvYzv/view?usp=sharing)
 
 ## Project Structure
 
